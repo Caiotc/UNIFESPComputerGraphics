@@ -20,7 +20,7 @@ void print_list(node_t *head)
     }
 }
 
-void add_node(node_t *head, int value)
+void add_node_push(node_t *head, int value)
 {
     node_t *current = head;
     node_t *newNode = (node_t *)malloc(sizeof(node_t));
