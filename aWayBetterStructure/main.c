@@ -5,7 +5,7 @@
 #include "./utils/uselfullcallbacks.h"
 
 node_coordinates *pointsList = NULL;
-int ShapeColor[] = {0, 0, 255};
+GLfloat ShapeColor[3] = {0, 0, 0};
 
 void drawDot()
 {
@@ -13,71 +13,76 @@ void drawDot()
 
 void keyboard_callback(unsigned char key, int x, int y)
 {
-    printf("key_code =%d  \n", key);
+    // printf("key_code =%d  \n", key);
     switch (key)
     {
-    case 48:
+    case 'r':
+        remove_node_of_list_end(pointsList);
+        printf("\n\n");
+        interate_over_list(print_node_values, pointsList);
+        break;
+    case '1':
+        ShapeColor[0] = 0;
+        ShapeColor[1] = 0;
+        ShapeColor[2] = 1;
+        break;
+    case '2':
         /* code */
-        ShapeColor[0] = 255;
+        ShapeColor[0] = 1;
         ShapeColor[1] = 0;
         ShapeColor[2] = 0;
         break;
-    case 49:
+    case '3':
         ShapeColor[0] = 0;
-        ShapeColor[1] = 255;
+        ShapeColor[1] = 1;
         ShapeColor[2] = 0;
         /* code */
         break;
-    case 50:
+    case '4':
         ShapeColor[0] = 0;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 255;
-        /* code */
-        break;
-    case 51:
-        ShapeColor[0] = 0;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 0;
-        /* code */
-        break;
-    case 52:
-        ShapeColor[0] = 255;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 98;
-        /* code */
-        break;
-    case 53:
-        ShapeColor[0] = 157;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 255;
-        /* code */
-        break;
-    case 54:
-        ShapeColor[0] = 255;
         ShapeColor[1] = 0;
         ShapeColor[2] = 0;
         /* code */
         break;
-    case 55:
-        ShapeColor[0] = 0;
-        ShapeColor[1] = 247;
-        ShapeColor[2] = 255;
+    case '5':
+        ShapeColor[0] = 1;
+        ShapeColor[1] = 0;
+        ShapeColor[2] = 0.5;
         /* code */
         break;
-    case 56:
-        ShapeColor[0] = 39;
-        ShapeColor[1] = 150;
-        ShapeColor[2] = 20;
+    case '6':
+        ShapeColor[0] = 0.5;
+        ShapeColor[1] = 0;
+        ShapeColor[2] = 1;
         /* code */
         break;
-    case 57:
+    case '7':
+        ShapeColor[0] = 1;
+        ShapeColor[1] = 0;
+        ShapeColor[2] = 0;
+        /* code */
+        break;
+    case '8':
         ShapeColor[0] = 0;
-        ShapeColor[1] = 255;
-        ShapeColor[2] = 75;
+        ShapeColor[1] = 0.9;
+        ShapeColor[2] = 1;
+        /* code */
+        break;
+    case '9':
+        ShapeColor[0] = 0.2;
+        ShapeColor[1] = 0.7;
+        ShapeColor[2] = 0.11;
+        /* code */
+        break;
+    case '0':
+        ShapeColor[0] = 0;
+        ShapeColor[1] = 1;
+        ShapeColor[2] = 0.75;
         /* code */
     default:
         break;
     }
+    glutPostRedisplay();
 }
 
 void mouse(int button, int state, int x, int y)
@@ -88,9 +93,6 @@ void mouse(int button, int state, int x, int y)
         if (state == GLUT_DOWN)
         {
             add_node_to_list_end(&pointsList, x, y);
-            printf("\n");
-            interate_over_list(print_node_values, pointsList);
-            remove_node_of_list_begin(&pointsList);
             printf("\n");
             interate_over_list(print_node_values, pointsList);
         }
@@ -121,12 +123,11 @@ void display()
     glLoadIdentity();
     ///////////////////////
 
-    printf("!@# color %d", ShapeColor[0]);
-    glColor3iv(ShapeColor);
-    // glColor3f(0.0, 0.4, 0.2);
+    glColor3fv(ShapeColor);
     glPointSize(10);
+    glLineWidth(5);
 
-    glBegin(GL_POINTS);
+    glBegin(GL_LINES);
     interate_over_list(call_vertex_2d_from_node, pointsList);
     glEnd();
 

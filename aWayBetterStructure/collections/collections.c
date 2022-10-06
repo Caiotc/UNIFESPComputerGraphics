@@ -60,6 +60,31 @@ void remove_node_of_list_begin(node_coordinates **head)
     *head = nextNode;
 }
 
+void remove_node_of_list_end(node_coordinates *head)
+{
+    node_coordinates *current = head;
+
+    if (current->next == NULL)
+    {
+        printf("\n\n!@# Entrou nessa caralha ");
+        free(head);
+        return;
+    }
+
+    while (current->next != NULL)
+    {
+        current = (node_coordinates *)current->next;
+        if (current->next == NULL)
+            break;
+    }
+
+    printf("\n\n penultimo");
+    print_node_values(current);
+
+    free(current->next);
+    current->next = NULL;
+}
+
 void interate_over_list(void (*callback)(), node_coordinates *head)
 {
     node_coordinates *current = head;
