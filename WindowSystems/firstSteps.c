@@ -16,6 +16,20 @@ gonna include GL/glut.h
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+GLenum ErrorCheck()
+{
+    GLenum code;
+    const GLubyte *string;
+    code = glGetError();
+
+    if (code != GL_NO_ERROR)
+    {
+        string = gluErrorString(code);
+        fprintf(stderr, "OpenGL error: %s\n", string);
+    }
+}
+
 void init()
 {
     // this sets a windows background color RGB,ALPHA
@@ -37,6 +51,7 @@ void lineSegment()
     glVertex2i(10, 145);
     glEnd();
 
+    // this forces the execution of openGl functions
     glFlush(); // process opengl quick as possible
 }
 
