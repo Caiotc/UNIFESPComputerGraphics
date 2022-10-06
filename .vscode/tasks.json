@@ -10,9 +10,7 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "-lglut",
-                "-lGL",
-                "-lGLU"
+                "-lglut" ,"-lGL","-lGLU"                
             ],
             "options": {
                 "cwd": "${fileDirname}"

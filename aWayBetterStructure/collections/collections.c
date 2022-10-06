@@ -1,5 +1,7 @@
 #include "collections.h"
+#include "../utils/uselfullcallbacks.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 node_coordinates *init_node_coordinates_list(float x, float y)
 {
@@ -11,10 +13,19 @@ node_coordinates *init_node_coordinates_list(float x, float y)
     return head;
 }
 
-void add_node_to_list(node_coordinates *head, float x, float y)
+void add_node_to_list_end(node_coordinates **head, float x, float y)
 {
-    node_coordinates *current = head;
+    // if its not initialized then init
+    node_coordinates *current = *head;
     node_coordinates *newNode = (node_coordinates *)malloc(sizeof(node_coordinates));
+
+    if (*head == NULL)
+    {
+        printf("!@# entrou aqui\n");
+        *head = init_node_coordinates_list(x, y);
+        // print_node_values(*head);
+        return;
+    }
 
     while (current->next != NULL)
     {
