@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <math.h>
-
 #include "./collections/collections.h"
 #include "./utils/uselfullcallbacks.h"
 
+// int test[3] = {GL_LINES, GL_POINT, 0};
 node_coordinates *pointsList = NULL;
-GLfloat ShapeColor[3] = {0, 0, 0};
+int colorSelector = 0;
+int modeToDraw = 0;
+int strokeSize = 1;
+int typeOfSelector = 0;
 
 void drawDot()
 {
@@ -13,71 +16,233 @@ void drawDot()
 
 void keyboard_callback(unsigned char key, int x, int y)
 {
-    // printf("key_code =%d  \n", key);
     switch (key)
     {
+    case 'e':
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n////////////MODO DE EDICAO DE COR: use as teclas de 0-9 para selecionar cor///////////");
+            typeOfSelector = 0;
+        }
+        else
+        {
+            printf("\n/////////insira mais um ponto para terminar de definir a figura! depois troque o modo de edicao//////");
+        }
+
+        break;
+    case 'E':
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n////////////MODO DE EDICAO DE COR: use as teclas de 0-9 para selecionar cor///////////");
+            typeOfSelector = 0;
+        }
+        else
+        {
+            printf("\n/////////insira mais um ponto para terminar de definir a figura! depois troque o modo de edicao//////");
+        }
+        break;
+    case 'k':
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n////////////MODO DE EDICAO DE TRACO: use as teclas de 0-9 mudar o tamanho do traco///////////");
+            typeOfSelector = 1;
+        }
+        else
+        {
+            printf("\n/////////insira mais um ponto para terminar de definir a figura! depois troque o modo de edicao//////");
+        }
+        break;
+    case 'K':
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n////////////MODO DE EDICAO DE COR: use as teclas de 0-9 para selecionar cor///////////");
+            typeOfSelector = 1;
+        }
+        else
+        {
+            printf("\n/////////insira mais um ponto para terminar de definir a figura! depois troque o modo de edicao//////");
+        }
+
+        break;
     case 'r':
-        remove_node_of_list_end(pointsList);
-        printf("\n\n");
-        interate_over_list(print_node_values, pointsList);
+        // must draw lines
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n\n///////////////////////////");
+            printf("\n!@# modo trocado para reta");
+            modeToDraw = 0;
+        }
+        else
+            printf("\n !@# insira outro ponto para completar o par ordenado antes de trocar de modo \n");
+        break;
+    case 'c':
+        // must draw Circles
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n\n///////////////////////////");
+            printf("\n!@# modo trocado para circunferencia");
+
+            modeToDraw = 1;
+        }
+        else
+            printf("\n !@# insira outro ponto para completar o par ordenado antes de trocar de modo \n");
+        break;
+    case 'R':
+        // must draw lines
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n\n///////////////////////////");
+            printf("\n!@# modo trocado para reta");
+            modeToDraw = 0;
+        }
+        else
+            printf("\n !@# insira outro ponto para completar o par ordenado antes de trocar de modo \n");
+        break;
+    case 'C':
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n\n///////////////////////////");
+            printf("\n!@# modo trocado para circunferencia");
+            modeToDraw = 1;
+        }
+        else
+            printf("\n !@# insira outro ponto para completar o par ordenado antes de trocar de modo \n");
         break;
     case '1':
-        ShapeColor[0] = 0;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 1;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+            strokeSize = 1;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 1;
+        }
+
         break;
     case '2':
-        /* code */
-        ShapeColor[0] = 1;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 0;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 2;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 2;
+        }
         break;
     case '3':
-        ShapeColor[0] = 0;
-        ShapeColor[1] = 1;
-        ShapeColor[2] = 0;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 3;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 3;
+        }
         /* code */
         break;
     case '4':
-        ShapeColor[0] = 0;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 0;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 4;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 4;
+        }
         /* code */
         break;
     case '5':
-        ShapeColor[0] = 1;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 0.5;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 5;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 5;
+        }
         /* code */
         break;
     case '6':
-        ShapeColor[0] = 0.5;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 1;
-        /* code */
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 6;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 6;
+        } /* code */
         break;
     case '7':
-        ShapeColor[0] = 1;
-        ShapeColor[1] = 0;
-        ShapeColor[2] = 0;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 7;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 7;
+        }
         /* code */
         break;
     case '8':
-        ShapeColor[0] = 0;
-        ShapeColor[1] = 0.9;
-        ShapeColor[2] = 1;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 8;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 8;
+        }
         /* code */
         break;
     case '9':
-        ShapeColor[0] = 0.2;
-        ShapeColor[1] = 0.7;
-        ShapeColor[2] = 0.11;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 9;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 9;
+        }
         /* code */
         break;
     case '0':
-        ShapeColor[0] = 0;
-        ShapeColor[1] = 1;
-        ShapeColor[2] = 0.75;
+        if (typeOfSelector)
+        {
+            printf("\n//////////VOCE SELECIONOU UM NOVO TAMANHO DE TRACO");
+
+            strokeSize = 10;
+        }
+        else
+        {
+            printf("\n//////////VOCE SELECIONOU UMA NOVA COR");
+            colorSelector = 0;
+        }
         /* code */
     default:
         break;
@@ -92,9 +257,10 @@ void mouse(int button, int state, int x, int y)
     case GLUT_LEFT_BUTTON:
         if (state == GLUT_DOWN)
         {
-            add_node_to_list_end(&pointsList, x, y);
-            printf("\n");
+            add_node_to_list_end(&pointsList, x, y, modeToDraw, strokeSize, colorSelector);
+            printf("\n\n///////////PONTOS ATUAIS DA LISTA/////////////");
             interate_over_list(print_node_values, pointsList);
+            printf("\n\n//////////////////////////////////////////////");
         }
         break;
     default:
@@ -121,14 +287,9 @@ void display()
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    ///////////////////////
-
-    glColor3fv(ShapeColor);
-    glPointSize(10);
-    glLineWidth(5);
 
     glBegin(GL_LINES);
-    interate_over_list(call_vertex_2d_from_node, pointsList);
+    iterate_over_list_repass_every_two_points(draw_on_two_points, pointsList);
     glEnd();
 
     glutSwapBuffers();
