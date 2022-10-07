@@ -61,7 +61,8 @@ void remove_node_of_list_begin(node_coordinates **head)
     int listSize = 1;
     node_coordinates *current = *head;
     node_coordinates *nextNode = NULL;
-
+    printf("\n!@# chegou aqui se liga no nodo");
+    print_node_values(*head);
     if (*head == NULL)
         return;
     while (current->next != NULL)
@@ -86,6 +87,7 @@ void remove_node_of_list_end(node_coordinates **head)
         return;
     if (current->next == NULL)
     {
+        printf("\n!@# mano eu ja to no fim da lista");
         free(*head);
         *head = NULL;
         return;

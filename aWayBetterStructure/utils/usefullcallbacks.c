@@ -1,4 +1,5 @@
 #include "uselfullcallbacks.h"
+#include "../collections/collections.h"
 #include <stdio.h>
 #include <math.h>
 #define PI 3.141592654
@@ -12,7 +13,8 @@ void call_vertex_2d_from_node(node_coordinates *node)
 
 void print_node_values(node_coordinates *node)
 {
-
+    if (node == NULL)
+        return;
     printf("\n posX: %f posY:%f drawMode%d strokeSize:%d nextMemAddress:%p", node->x, node->y, node->modeToDraw, node->strokeSize, node->next);
 }
 void draw_circle(node_coordinates *a, GLfloat radius)
@@ -38,15 +40,33 @@ float calculate_distance_between_points(node_coordinates *a, node_coordinates *b
 {
     float x = pow(a->x - b->x, 2);
     float y = pow(a->y - b->y, 2);
-    printf("\n\n////////////////calculando a distancia dos pontos///////////////////");
-    printf("\nx**2 => %f \n y**2=>%f \n x**2+y**2 =>%f \n distancia de a-b =>  %f ", x, y, x + y, sqrt(x + y));
-    printf("\n\n///////////////////////////////////");
-
     return sqrt(x + y);
 }
+
+void draw_rectangle_by_diagonal(node_coordinates *a, node_coordinates *c)
+{
+    node_coordinates *b = init_node_coordinates_list(a->x + (c->x - a->x), a->y, a->modeToDraw, a->strokeSize, a->colorSelector);
+    node_coordinates *d = init_node_coordinates_list(c->x, a->y + (c->y - a->y), c->modeToDraw, c->strokeSize, c->colorSelector);
+
+    printf("\n!@# pontos do retangulo");
+    print_node_values(a);
+    print_node_values(b);
+    print_node_values(c);
+    print_node_values(d);
+
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(a->x, a->y);
+    glVertex2f(b->x, b->y);
+    glVertex2f(c->x, c->y);
+    glVertex2f(d->x, d->y);
+    glEnd();
+
+    free(b);
+    free(d);
+}
+
 void draw_on_two_points(node_coordinates *a, node_coordinates *b)
 {
-
     glColor3fv(DEFAULT_COLORS[a->colorSelector]);
     glPointSize(a->strokeSize);
     glLineWidth(a->strokeSize);
@@ -56,11 +76,16 @@ void draw_on_two_points(node_coordinates *a, node_coordinates *b)
         printf("\n!@# ai, os dois pontos tem que ser elecionados no mesmo modo\n");
         return;
     }
-    if (a->modeToDraw)
+
+    if (a->modeToDraw == 1)
     {
         draw_circle(a, calculate_distance_between_points(a, b));
     }
-    else
+    else if (a->modeToDraw == 2)
+    {
+        draw_rectangle_by_diagonal(a, b);
+    }
+    else if (a->modeToDraw == 0)
     {
         glBegin(GL_LINES);
         glVertex2f(a->x, a->y);

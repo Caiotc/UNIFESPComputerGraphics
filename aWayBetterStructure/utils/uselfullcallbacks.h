@@ -7,5 +7,6 @@ void draw_circle(node_coordinates *a, GLfloat radius);
 void call_vertex_2d_from_node(node_coordinates *node);
 void print_node_values(node_coordinates *node);
 void draw_on_two_points(node_coordinates *a, node_coordinates *b);
+void draw_rectangle_by_diagonal(node_coordinates *a, node_coordinates *c);
 
 #endif

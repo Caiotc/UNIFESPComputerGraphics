@@ -18,6 +18,36 @@ void keyboard_callback(unsigned char key, int x, int y)
 {
     switch (key)
     {
+    case 'b':
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n\n///////////////////////////");
+            printf("\n!@# modo trocado para retangulo a partir dos pontos da diagonal");
+            modeToDraw = 2;
+        }
+        else
+            printf("\n !@# insira outro ponto para completar o par ordenado antes de trocar de modo \n");
+        break;
+    case 'B':
+        if (calculate_list_size(pointsList) % 2 == 0)
+        {
+            printf("\n\n///////////////////////////");
+            printf("\n!@# modo trocado para retangulo a partir dos pontos da diagonal");
+            modeToDraw = 2;
+        }
+        else
+            printf("\n !@# insira outro ponto para completar o par ordenado antes de trocar de modo \n");
+        break;
+    case 'l':
+        printf("\n ///////////as coordenadas que definem as figuras seram limpadas///////////////");
+        interate_over_list(remove_node_of_list_end, pointsList);
+        printf("\n\n///////////PONTOS ATUAIS DA LISTA/////////////");
+        interate_over_list(print_node_values, pointsList);
+        printf("\n\n//////////////////////////////////////////////");
+        break;
+    case 'L':
+        interate_over_list(remove_node_of_list_end, pointsList);
+        break;
     case 'e':
         if (calculate_list_size(pointsList) % 2 == 0)
         {
