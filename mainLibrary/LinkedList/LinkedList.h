@@ -8,7 +8,7 @@ struct LinkedList
     struct Node *head;
     int length;
 
-    void (*insert)(int index, void *data, int size, int data_type, struct LinkedList *linked_list);
+    void (*insert)(int index, void *data, int size, struct LinkedList *linked_list);
     void (*remove)(int index, struct LinkedList *linked_list);
     void *(*retrieve)(int index, struct LinkedList *linked_list);
     struct LinkedList (*constructor)(void);

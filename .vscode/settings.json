@@ -2,6 +2,7 @@
   "files.associations": {
     "abstracttypes.h": "c",
     "uselfullcallbacks.h": "c",
-    "collections.h": "c"
+    "collections.h": "c",
+    "string.h": "c"
   }
 }

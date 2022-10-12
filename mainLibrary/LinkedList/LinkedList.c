@@ -1,11 +1,11 @@
 #include "./LinkedList.h"
 
-struct Node *create_node(void *data, int data_type, int size);
+struct Node *create_node(void *data, int size);
 void destroy_node(struct Node *node);
 
 struct Node *iterate(int index, struct LinkedList *linked_list);
 
-void insert_node(int index, void *data, int size, int data_type, struct LinkedList *linked_list);
+void insert_node(int index, void *data, int size, struct LinkedList *linked_list);
 void remove_node(int index, struct LinkedList *linked_list);
 void *retrieve_data(int index, struct LinkedList *linked_list);
 
@@ -29,10 +29,10 @@ void linked_list_destructor(struct LinkedList *linked_list)
         linked_list->remove(i, linked_list);
 }
 
-struct Node *create_node(void *data, int data_type, int size)
+struct Node *create_node(void *data, int size)
 {
     struct Node *new_node_address = (struct Node *)malloc(sizeof(struct Node));
-    *new_node_address = node_constructor(data, data_type, size);
+    *new_node_address = node_constructor(data, size);
     return new_node_address;
 }
 
@@ -58,9 +58,9 @@ struct Node *iterate(int index, struct LinkedList *linked_list)
     return cursor;
 }
 
-void insert_node(int index, void *data, int size, int data_type, struct LinkedList *linked_list)
+void insert_node(int index, void *data, int size, struct LinkedList *linked_list)
 {
-    struct Node *node_to_insert = create_node(data, data_type, size);
+    struct Node *node_to_insert = create_node(data, size);
     if (index == 0)
     {
         node_to_insert->next = linked_list->head;
