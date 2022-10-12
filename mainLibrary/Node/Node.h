@@ -5,15 +5,27 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-struct Node_int
+enum DataTypes
+{
+    Special,
+    Int,
+    Long,
+    Float,
+    Double,
+    Char,
+    Bool
+};
+
+struct Node
 {
     // data is a void pointer - casting required for any acess
-    int data;
-
-    // type of data
-
-    // pointer to next node in chain
-    struct Node_int *next;
+    void *data;
+    int data_types;
+    int size;
+    struct Node *next;
 };
+
+struct Node node_constructor(void *data, int data_type, int size);
+void node_destructor(struct Node *node);
 
 #endif

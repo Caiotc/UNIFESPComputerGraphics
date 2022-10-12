@@ -3,16 +3,17 @@
 
 #include "../Node/Node.h"
 
-struct LinkedList_int
+struct LinkedList
 {
-    struct Node_int *head;
+    struct Node *head;
     int length;
 
-    void (*insert)(int index, int data, struct LinkedList_int *linked_list);
-    void (*remove)(int index, struct LinkedList_int *linked_list);
-    int (*retrieve)(int index, struct LinkedList_int *linked_list);
-    struct LinkedList_int (*constructor)(void);
+    void (*insert)(int index, void *data, int size, int data_type, struct LinkedList *linked_list);
+    void (*remove)(int index, struct LinkedList *linked_list);
+    void *(*retrieve)(int index, struct LinkedList *linked_list);
+    struct LinkedList (*constructor)(void);
 };
 
-struct LinkedList_int linked_list_int_constructor();
+struct LinkedList linked_list_constructor(void);
+void linked_list_destructor(struct LinkedList *linked_list);
 #endif
