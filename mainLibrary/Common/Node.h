@@ -14,5 +14,7 @@ struct Node
 
 struct Node node_constructor(void *data, int size);
 void node_destructor(struct Node *node);
+struct Node *create_node(void *data, int size);
 
+void destroy_node(struct Node *node);
 #endif

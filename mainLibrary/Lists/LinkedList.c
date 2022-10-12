@@ -1,8 +1,5 @@
 #include "./LinkedList.h"
 
-struct Node *create_node(void *data, int size);
-void destroy_node(struct Node *node);
-
 struct Node *iterate(int index, struct LinkedList *linked_list);
 
 void insert_node(int index, void *data, int size, struct LinkedList *linked_list);
@@ -27,18 +24,6 @@ void linked_list_destructor(struct LinkedList *linked_list)
     int i;
     for (i = 0; i < linked_list->length; i++)
         linked_list->remove(i, linked_list);
-}
-
-struct Node *create_node(void *data, int size)
-{
-    struct Node *new_node_address = (struct Node *)malloc(sizeof(struct Node));
-    *new_node_address = node_constructor(data, size);
-    return new_node_address;
-}
-
-void destroy_node(struct Node *node)
-{
-    node_destructor(node);
 }
 
 // iterate untill reaches the given index
