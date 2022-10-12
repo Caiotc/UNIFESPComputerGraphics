@@ -9,6 +9,7 @@ struct Node
     // data is a void pointer - casting required for any acess
     void *data;
     struct Node *next;
+    struct Node *previous;
 };
 
 struct Node node_constructor(void *data, int size);

@@ -3,6 +3,8 @@
     "abstracttypes.h": "c",
     "uselfullcallbacks.h": "c",
     "collections.h": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "linkedlist.h": "c",
+    "queue.h": "c"
   }
 }

@@ -1,20 +1,18 @@
 #include <stdio.h>
-#include "./LinkedList/LinkedList.h"
+#include "./Lists/LinkedList.h"
+#include "./Lists/Queue.h"
 
 int main(int argc, char const *argv[])
 {
-    struct LinkedList list = linked_list_constructor();
+
+    struct Queue queue = queue_constructor();
 
     for (int i = 0; i < 10; i++)
-    {
-        list.insert(i, &i, 1, &list);
-    }
+        queue.push(&queue, &i, 1);
 
-    for (int i = 0; i < 10; i++)
-    {
-        printf("\n%d", *(int *)list.retrieve(i, &list));
-        /* code */
-    }
+    printf("peek %d \n", *(int *)queue.peek(&queue));
+    queue.pop(&queue);
+    printf("peek %d \n", *(int *)queue.peek(&queue));
 
     /* code */
     return 0;
