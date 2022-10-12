@@ -14,7 +14,10 @@ void call_vertex_2d_from_node(node_coordinates *node)
 void print_node_values(node_coordinates *node)
 {
     if (node == NULL)
+    {
+        printf("!@# isso aqui e vazio mano");
         return;
+    }
     printf("\n posX: %f posY:%f drawMode%d strokeSize:%d nextMemAddress:%p", node->x, node->y, node->modeToDraw, node->strokeSize, node->next);
 }
 void draw_circle(node_coordinates *a, GLfloat radius)
@@ -54,13 +57,16 @@ void draw_rectangle_by_diagonal(node_coordinates *a, node_coordinates *c)
     print_node_values(c);
     print_node_values(d);
 
-    glBegin(GL_LINE_LOOP);
+    glBegin(GL_QUAD_STRIP);
     glVertex2f(a->x, a->y);
     glVertex2f(b->x, b->y);
+
     glVertex2f(c->x, c->y);
     glVertex2f(d->x, d->y);
+
     glEnd();
 
+    glFlush();
     free(b);
     free(d);
 }
@@ -68,7 +74,8 @@ void draw_rectangle_by_diagonal(node_coordinates *a, node_coordinates *c)
 void draw_on_two_points(node_coordinates *a, node_coordinates *b)
 {
     glColor3fv(DEFAULT_COLORS[a->colorSelector]);
-    glPointSize(a->strokeSize);
+    glPointSize(10);
+
     glLineWidth(a->strokeSize);
 
     if (a->modeToDraw != b->modeToDraw)
@@ -83,7 +90,7 @@ void draw_on_two_points(node_coordinates *a, node_coordinates *b)
     }
     else if (a->modeToDraw == 2)
     {
-        draw_rectangle_by_diagonal(a, b);
+        glRectf(a->x, a->y, b->x, b->y);
     }
     else if (a->modeToDraw == 0)
     {

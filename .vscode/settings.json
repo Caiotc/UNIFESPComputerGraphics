@@ -1,5 +1,7 @@
 {
   "files.associations": {
-    "abstracttypes.h": "c"
+    "abstracttypes.h": "c",
+    "uselfullcallbacks.h": "c",
+    "collections.h": "c"
   }
 }

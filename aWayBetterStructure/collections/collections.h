@@ -9,5 +9,6 @@ void remove_node_of_list_begin(node_coordinates **head);
 void remove_node_of_list_end(node_coordinates **head);
 void interate_over_list(void (*callback)(), node_coordinates *head);
 void iterate_over_list_repass_every_two_points(void (*callback)(), node_coordinates *head);
+void kill_list(node_coordinates **head);
 
 #endif

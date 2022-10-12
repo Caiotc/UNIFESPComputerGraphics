@@ -107,6 +107,40 @@ void remove_node_of_list_end(node_coordinates **head)
     current->next = NULL;
 }
 
+void kill_list(node_coordinates **head)
+{
+    int i = 0;
+    node_coordinates *current = *head;
+    node_coordinates *currentOneAhead;
+    int listSize = calculate_list_size(*head);
+    if (!listSize)
+    {
+        printf("\n!@# LISTA VAZIA %d", listSize);
+        return;
+    }
+    if (listSize == 1)
+    {
+        printf("\n!@# LISTA unica %d", listSize);
+
+        remove_node_of_list_end(head);
+        return;
+    }
+    if (listSize % 2 == 1)
+        remove_node_of_list_end(head);
+
+    listSize = calculate_list_size(*head);
+    int lastEvenNum = listSize - (listSize % 2);
+    int numOfRunThoughs = lastEvenNum / 2;
+
+    currentOneAhead = (node_coordinates *)current->next;
+
+    for (i; i <= numOfRunThoughs; i++)
+    {
+        remove_node_of_list_end(head);
+        remove_node_of_list_end(head);
+    }
+}
+
 void iterate_over_list_repass_every_two_points(void (*callback)(), node_coordinates *head)
 {
     int listSize = calculate_list_size(head);
