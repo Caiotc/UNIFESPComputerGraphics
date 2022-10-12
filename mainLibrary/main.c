@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
 
     for (int i = 0; i < 10; i++)
     {
-        printf("\n%d", ((int *)list.retrieve(i, &list))[0]);
+        printf("\n%d", *(int *)list.retrieve(i, &list));
         /* code */
     }
 
