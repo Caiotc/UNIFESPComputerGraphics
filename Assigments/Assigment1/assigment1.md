@@ -21,3 +21,7 @@ In this task i had to complete some things:
 ![alt text][assigment]
 
 [assigment]: ../../md/assigmnet1.gif
+
+# some considerations
+
+when I did this i was really apart from c programming, i have not coded in c in almost 2 year - I returning to college now, pos pandemic, yeah I have a really bad academic life. So there are some bad choices and really smelly code, specially in main.c. I tried to made a callback side effect oriented drawing but it havent came in a good way. but its there, done.
