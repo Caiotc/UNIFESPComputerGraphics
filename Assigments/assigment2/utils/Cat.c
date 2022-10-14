@@ -30,11 +30,15 @@ void draw_itself(struct Cat * __self)
     GLfloat roxo[3] = {0.5f,0.2f,0.4f};
     GLfloat black[3] = {0.0f,0.0f,0.0f};
 
+    
     GLfloat eye_one coordinate[2];
     GLfloat eye_two coordinate[2]
 
+    Glfloat cat_ear1 coordinate[2];
+    Glfloat cat_ear2 coordinate[2];
+
     GLfolat head_coordinate[2];
-    GLfloat hed_ 
+    GLfloat body_coordinate[2];
 
     __self->drawer.draw_circle_filled(__self->coordinates,0.1f,roxo);
     __self->drawer.draw_circle_filled(__self->coordinates,0.010f,black);

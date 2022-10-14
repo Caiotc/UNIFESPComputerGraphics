@@ -6,10 +6,13 @@
 #include "./BasicShapeDrawer/BasicShapeDrawer.h"
 
 
+
+
 struct Cat
 {
     GLfloat coordinates[2];
     GLfloat cat_size;
+    GLfloat cat_center;
 
     struct LinkedList ball_list;
     struct BasicShapeDrawer drawer;
