@@ -16,10 +16,10 @@ struct Cat cat_constructor(GLfloat x,GLfloat y){
     return new_cat;
 }
 
-struct Cat cat_destructor( struct Cat *cat)
+void cat_destructor( struct Cat *cat)
 {
-    linked_list_destructor(cat->ball_list);
-    basic_shape_drawer_destroyer(cat->drawer);
+    linked_list_destructor(&cat->ball_list);
+    basic_shape_drawer_destroyer(&cat->drawer);
     free(cat);    
 };
 
@@ -31,14 +31,14 @@ void draw_itself(struct Cat * __self)
     GLfloat black[3] = {0.0f,0.0f,0.0f};
 
     
-    GLfloat eye_one coordinate[2];
-    GLfloat eye_two coordinate[2]
+    // GLfloat eye_one coordinate[2];
+    // GLfloat eye_two coordinate[2]
 
-    Glfloat cat_ear1 coordinate[2];
-    Glfloat cat_ear2 coordinate[2];
+    // Glfloat cat_ear1 coordinate[2];
+    // Glfloat cat_ear2 coordinate[2];
 
-    GLfolat head_coordinate[2];
-    GLfloat body_coordinate[2];
+    // GLfolat head_coordinate[2];
+    // GLfloat body_coordinate[2];
 
     __self->drawer.draw_circle_filled(__self->coordinates,0.1f,roxo);
     __self->drawer.draw_circle_filled(__self->coordinates,0.010f,black);

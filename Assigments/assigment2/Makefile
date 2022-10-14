@@ -4,10 +4,13 @@ ListsPath = ./Lists/
 TreesPath = ./Trees/
 UtilsPath = ./utils/
 BasicShapeDrawerPath = $(UtilsPath)BasicShapeDrawer/
+PrimitivesPath = $(UtilsPath)MyPrimitives/
+GameObjectPath = $(UtilsPath)GameObject/
+ColisorPath = $(UtilsPath)Colisor/
 
 
-all: main.o  LinkedList.o Node.o Queue.o BinarySearchTree.o BasicShapeDrawer.o Cat.o
-	gcc main.o  $(ListsPath)LinkedList.o $(CommonPath)Node.o $(ListsPath)Queue.o  $(TreesPath)BinarySearchTree.o $(BasicShapeDrawerPath)BasicShapeDrawer.o $(UtilsPath)Cat.o -o output.exe $(FLAGS)
+all: main.o  LinkedList.o Node.o Queue.o BinarySearchTree.o BasicShapeDrawer.o Cat.o GameObject.o Colisor.o
+	gcc main.o  $(ListsPath)LinkedList.o $(CommonPath)Node.o $(ListsPath)Queue.o  $(TreesPath)BinarySearchTree.o $(BasicShapeDrawerPath)BasicShapeDrawer.o $(PrimitivesPath)Cat.o $(GameObjectPath)GameObject.o $(ColisorPath)Colisor.o -o output.exe $(FLAGS)
 
 LinkedList.o: $(ListsPath)LinkedList.c
 	gcc -c $(ListsPath)LinkedList.c -o $(ListsPath)LinkedList.o 
@@ -23,8 +26,11 @@ BinarySearchTree.o: $(TreesPath)BinarySearchTree.c
 
 BasicShapeDrawer.o: $(BasicShapeDrawerPath)BasicShapeDrawer.o
 	gcc -c $(BasicShapeDrawerPath)BasicShapeDrawer.c -o $(BasicShapeDrawerPath)BasicShapeDrawer.o
-Cat.o: $(UtilsPath)Cat.c 
-	gcc -c $(UtilsPath)Cat.c -o  $(UtilsPath)Cat.o
-	
+Cat.o: $(PrimitivesPath)Cat.c 
+	gcc -c $(PrimitivesPath)Cat.c -o  $(PrimitivesPath)Cat.o
+GameObject.o: $(GameObjectPath)GameObject.c
+	gcc -c $(GameObjectPath)GameObject.c -o $(GameObjectPath)GameObject.o
+Colisor.o:$(ColisorPath)Colisor.c
+	gcc -c $(ColisorPath)Colisor.c -o $(ColisorPath)Colisor.o
 main.o: main.c
 	gcc -c main.c

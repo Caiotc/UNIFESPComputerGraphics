@@ -2,8 +2,8 @@
 #define CAT_H
 #include <GL/freeglut.h>
 #include <stdlib.h>
-#include "../Lists/LinkedList.h"
-#include "./BasicShapeDrawer/BasicShapeDrawer.h"
+#include "../../Lists/LinkedList.h"
+#include "../BasicShapeDrawer/BasicShapeDrawer.h"
 
 
 

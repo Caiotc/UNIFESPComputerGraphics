@@ -2,7 +2,7 @@
 
 #include "./Lists/LinkedList.h"
 #include "./Lists/Queue.h"
-#include "./utils/Cat.h"
+#include "./utils/MyPrimitives/Cat.h"
 
 struct Cat cat; 
  GLfloat a[2] = {0.3f,0.4f};
