@@ -3,13 +3,10 @@
 #include "./Lists/LinkedList.h"
 #include "./Lists/Queue.h"
 #include "./utils/Cat.h"
-#include "./utils/BasicShapeDrawer/BasicShapeDrawer.h"
 
- struct Cat cat; 
- struct BasicShapeDrawer drawer;
+struct Cat cat; 
  GLfloat a[2] = {0.3f,0.4f};
  GLfloat b[2] = {0.4f,0.7f};
- GLfloat color[3] = {0.5f,0.2f,0.4f};
 
 void reshape(int w, int h)
 {
@@ -29,14 +26,13 @@ void display()
 {
     glClearColor(1.0, 1.0, 1.0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
-    
-    drawer.draw_quadrilateral_filled(a,b,color);
+    cat.draw_itself(&cat);
     glFlush();
 }
 int main(int argc, char *argv[])
 {
-    cat = cat_constructor(0.0, 0.0);
-    drawer= basic_shape_drawer_constructor();
+    //printf("\n!@# reaches here");
+    cat = cat_constructor(0.5f, 0.5f);
     glutInit(&argc, argv);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(640, 480);
