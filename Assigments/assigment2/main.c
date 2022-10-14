@@ -31,7 +31,7 @@ void display()
 }
 int main(int argc, char *argv[])
 {
-    //printf("\n!@# reaches here");
+    printf("\n!@# reaches here wo many times it reaches here");
     cat = cat_constructor(0.5f, 0.5f);
     glutInit(&argc, argv);
     glutInitWindowPosition(100, 100);

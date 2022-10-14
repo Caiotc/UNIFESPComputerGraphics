@@ -10,18 +10,34 @@ struct Cat cat_constructor(GLfloat x,GLfloat y){
     new_cat.coordinates[0] = x;
     new_cat.coordinates[1] = y;
     new_cat.drawer = basic_shape_drawer_constructor();
-    //new_cat.draw_itself = draw_itself;
+    new_cat.draw_itself = draw_itself;
     new_cat.ball_list = linked_list_constructor();
 
     return new_cat;
 }
 
+struct Cat cat_destructor( struct Cat *cat)
+{
+    linked_list_destructor(cat->ball_list);
+    basic_shape_drawer_destroyer(cat->drawer);
+    free(cat);    
+};
+
+
 void draw_itself(struct Cat * __self)
 {
-    printf("!@# chegou aqui");
-    GLfloat color[3] = {0.5f,0.2f,0.4f};
+    printf("\n!@# chegou aqui");
+    GLfloat roxo[3] = {0.5f,0.2f,0.4f};
+    GLfloat black[3] = {0.0f,0.0f,0.0f};
 
-    __self->drawer.draw_circle_filled(__self->coordinates,0.1f,color);
+    GLfloat eye_one coordinate[2];
+    GLfloat eye_two coordinate[2]
+
+    GLfolat head_coordinate[2];
+    GLfloat hed_ 
+
+    __self->drawer.draw_circle_filled(__self->coordinates,0.1f,roxo);
+    __self->drawer.draw_circle_filled(__self->coordinates,0.010f,black);
 
 }
 
