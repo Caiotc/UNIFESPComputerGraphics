@@ -23,7 +23,7 @@ struct Cat
     void (*cat_resize)(void);
 };
 
-struct Cat cat_constructor(GLfloat x, GLfloat y);
+struct Cat cat_constructor(GLfloat x, GLfloat y,GLfloat cat_size);
 void cat_destructor(struct Cat *cat);
 
 #endif
