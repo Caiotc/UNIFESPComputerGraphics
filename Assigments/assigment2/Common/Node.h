@@ -1,11 +1,12 @@
 #ifndef NODE_H
 #define NODE_H
-
 #include <stdlib.h>
 #include <stdio.h>
 
+
 struct Node
 {
+    int counter;
     // data is a void pointer - casting required for any acess
     void *data;
     struct Node *next;

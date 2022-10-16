@@ -1,4 +1,4 @@
-#ifndef BASICE_SHAPE_DRAWER_H
+#ifndef BASIC_SHAPE_DRAWER_H
 #define BASIC_SHAPE_DRAWER_H
 #include <GL/glut.h>
 #include <stdlib.h>

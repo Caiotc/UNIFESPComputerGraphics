@@ -2,28 +2,27 @@
 #define CAT_H
 #include <GL/freeglut.h>
 #include <stdlib.h>
-#include "../../Lists/LinkedList.h"
+#include "../../Lists/Queue.h"
 #include "../BasicShapeDrawer/BasicShapeDrawer.h"
+#include "../Collisor/Collisor.h"
 
 
 
 
 struct Cat
 {
-    GLfloat coordinates[2];
+    GLfloat * cat_center_coordinates;
     GLfloat cat_size;
-    GLfloat cat_center;
 
-    struct LinkedList ball_list;
-    struct BasicShapeDrawer drawer;
 
-    void (*draw_itself)(struct Cat * __self);
+
+    void (*draw_itself)(struct Cat * __self,struct BasicShapeDrawer *drawer);
     void (*pursuit_ball)(GLfloat ball_x, GLfloat ball_y);
     void (*cat_do_flip)(void);
     void (*cat_resize)(void);
 };
 
-struct Cat cat_constructor(GLfloat x, GLfloat y,GLfloat cat_size);
+struct Cat cat_constructor(GLfloat * cat_center_coordinates,GLfloat cat_size);
 void cat_destructor(struct Cat *cat);
 
 #endif

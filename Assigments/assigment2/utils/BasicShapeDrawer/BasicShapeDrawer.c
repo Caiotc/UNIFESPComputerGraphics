@@ -14,18 +14,14 @@ GLfloat calculate_distance_between_two_given_points(GLfloat *a,GLfloat *b);
 
 struct BasicShapeDrawer basic_shape_drawer_constructor()
 {
-
-    printf("\n!@# it entered the shape_drawer constructor");
     struct BasicShapeDrawer new_basic_shape_drawer;
 
     new_basic_shape_drawer.draw_point = draw_point;
     new_basic_shape_drawer.draw_line = draw_line;    
     new_basic_shape_drawer.draw_quadrilateral_line = draw_quadrilateral_line;     
     new_basic_shape_drawer.draw_quadrilateral_filled = draw_quadrilateral_filled;
-    printf("\n!@# it does create the quadrilateral");    
     new_basic_shape_drawer.draw_circle_rope = draw_circle_rope;
-    new_basic_shape_drawer.draw_circle_filled = draw_circle_filled;
-    printf("\n!@# it does pass the references");    
+    new_basic_shape_drawer.draw_circle_filled = draw_circle_filled;        
 
     return new_basic_shape_drawer;
 }
@@ -39,7 +35,6 @@ void basic_shape_drawer_destroyer(struct BasicShapeDrawer *basic_shape_drawer)
 
 
 void draw_point(GLfloat *a,GLfloat  *color){
-    printf("\n!@# chegou aqui no desenho do ponto ");
     glPointSize(5.0f);
     glColor3fv(color);
     glBegin(GL_POINTS);
@@ -47,7 +42,6 @@ void draw_point(GLfloat *a,GLfloat  *color){
     glEnd();
 }
 void draw_line(GLfloat *a,GLfloat *b,GLfloat  *color){
-    printf("\n!@# chegou aqui ");
     glLineWidth(3.0);
     glColor3fv(color);
     glBegin(GL_LINES);
@@ -118,6 +112,7 @@ void draw_circle_filled(GLfloat *center,GLfloat radius,GLfloat  *color)
         glVertex2f(center[0] + radius * cos(angle),center[1] + radius * sin(angle));
     }
     glEnd();
+
 
 }
 

@@ -1,4 +1,6 @@
 #include "./LinkedList.h"
+#include "../utils/MyPrimitives/Ball.h"
+
 
 struct Node *iterate(int index, struct LinkedList *linked_list);
 
@@ -40,16 +42,19 @@ struct Node *iterate(int index, struct LinkedList *linked_list)
     {
         cursor = cursor->next;
     }
+
     return cursor;
 }
 
 void insert_node(int index, void *data, int size, struct LinkedList *linked_list)
 {
     struct Node *node_to_insert = create_node(data, size);
+    printf("\n!@# chegou aqui ");
     if (index == 0)
     {
         node_to_insert->next = linked_list->head;
         linked_list->head = node_to_insert;
+
     }
     else
     {
@@ -84,6 +89,9 @@ void remove_node(int index, struct LinkedList *linked_list)
 
 void *retrieve_data(int index, struct LinkedList *linked_list)
 {
+
     struct Node *cursor = iterate(index, linked_list);
+    printf("\n!@# a bola que retornou com o index:%i x:%f y:%f ",index, ((struct Ball *)cursor->data)->center_coordinates[0],((struct Ball *)cursor->data)->center_coordinates[1]);
+
     return cursor->data;
 }

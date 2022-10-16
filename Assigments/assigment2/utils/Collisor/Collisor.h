@@ -4,7 +4,7 @@
 #include "../../Lists/LinkedList.h"
 #include <stdbool.h>
 enum CollisorType {
-    Cirlce,
+    Circle,
     Rectangle
 };
 struct Collisor{

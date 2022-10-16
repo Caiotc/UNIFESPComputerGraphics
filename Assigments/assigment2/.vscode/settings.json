@@ -1,8 +1,16 @@
 {
-    "files.associations": {
-        "basicshapedrawer.h": "c",
-        "cat.h": "c",
-        "queue.h": "c",
-        "linkedlist.h": "c"
-    }
+  "files.associations": {
+    "basicshapedrawer.h": "c",
+    "cat.h": "c",
+    "queue.h": "c",
+    "linkedlist.h": "c",
+    "collisor.h": "c",
+    "glut.h": "c",
+    "limits": "c",
+    "type_traits": "c",
+    "ball.h": "c",
+    "node.h": "c",
+    "stdio.h": "c",
+    "cmath": "c"
+  }
 }

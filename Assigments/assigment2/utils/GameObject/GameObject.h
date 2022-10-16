@@ -1,26 +1,32 @@
  #ifndef GAME_OBJECT_H
  #define GAME_OBJECT_H
- #include <GL/glut.h>
  #include <stdlib.h>
- #include "../Collisor/Collisor.h"
+ #include <string.h>
+ #include <GL/glut.h>
+ #include <stdbool.h>
+#include "../Collisor/Collisor.h"
+#include "../MyPrimitives/Cat.h"
 
  enum kitty_or_ball{
     Kitty,
     Ball
  };
 struct GameObject{
-    // how can i do it without casting?
-    void *graphical_object;
-    GLfloat * coordinates;
-    struct Collisor * collisor;
-    int type_of_primitive;
+    // remember to cas when using it
+    struct Cat graphical_object;
+    GLfloat * center_coordinates;
     GLfloat size_scale;
+    int type_of_primitive;
+
+    bool has_collider;
+    struct Collisor collisor;
+    
     // draw itself,translate,deslocate,and scale?
-    void  (*draw_itself)(void);
+    void  (*draw_it_self_go)(struct GameObject *__self);
 
 };
 
-struct GameObject game_object_constructor(void*graphical_object,int type_of_primitive,struct Collisor collisor);
+struct GameObject game_object_constructor(GLfloat * game_object_center_coordinates,GLfloat size_scale,int type_of_primitive,bool has_collider);
 void game_object_destructor(void);
 
 #endif
