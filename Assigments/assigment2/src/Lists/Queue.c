@@ -25,7 +25,6 @@ void queue_destructor(struct Queue *queue)
 void push(struct Queue *queue, void *data, int size)
 {
     // inserts at the end
-    printf("\n!@# olha essa caralha tamanho da lista ta inserindo no-> %d ",queue->list.length);
     queue->list.insert(queue->list.length, data, size, &queue->list);
 
 

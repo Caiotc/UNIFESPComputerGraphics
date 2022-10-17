@@ -5,6 +5,7 @@
 #include "../../Lists/Queue.h"
 #include "../BasicShapeDrawer/BasicShapeDrawer.h"
 #include "../Collisor/Collisor.h"
+#include "../Transform/Transform.h"
 
 
 
@@ -13,10 +14,10 @@ struct Cat
 {
     GLfloat * cat_center_coordinates;
     GLfloat cat_size;
+    struct Transform cat_transformer;
 
 
-
-    void (*draw_itself)(struct Cat * __self,struct BasicShapeDrawer *drawer);
+    void (*draw_itself)(struct Cat * __self,struct BasicShapeDrawer* drawer, bool should_transform,GLfloat * destiny_point);
     void (*pursuit_ball)(GLfloat ball_x, GLfloat ball_y);
     void (*cat_do_flip)(void);
     void (*cat_resize)(void);

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <math.h>
 
+
 struct BasicShapeDrawer
 {
     void (*draw_quadrilateral_line)(GLfloat *a, GLfloat *c,GLfloat  *color);

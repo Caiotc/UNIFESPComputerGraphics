@@ -1,6 +1,6 @@
 #include "./Cat.h"
 
-void draw_itself(struct Cat * __self,struct BasicShapeDrawer *drawer);
+void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer, bool should_transform,GLfloat * destiny_point);
 void pursuit_ball(GLfloat ball_x,GLfloat ball_y);
 void cat_do_flip();
 void cat_resize();
@@ -10,6 +10,7 @@ struct Cat cat_constructor(GLfloat * cat_center_coordinates,GLfloat cat_size){
     struct Cat new_cat;    
     new_cat.cat_center_coordinates = cat_center_coordinates;
     new_cat.cat_size = cat_size;
+    new_cat.cat_transformer = transform_constructor();
     new_cat.draw_itself = draw_itself;
 
     return new_cat;
@@ -17,38 +18,50 @@ struct Cat cat_constructor(GLfloat * cat_center_coordinates,GLfloat cat_size){
 
 void cat_destructor( struct Cat *cat)
 {
-    
+    transform_destructor(&cat->cat_transformer);     
     free(cat);    
 };
 
 
-void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer)
+void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer, bool should_transform,GLfloat * destiny_point)
 {
     printf("\n!@# the cat will be draw");
     ///////////////////////
     // calculate cat proporstions
-    GLfloat cat_size = __self->cat_size;
-    GLfloat tail_circle_size = cat_size * 1.0f/12.0f;
-    GLfloat second_circle_tail_size = cat_size * 1.0f/12.0f;
-    GLfloat third_circle_tail_size = cat_size * 1.0f/12.0f;
-    GLfloat body_size = cat_size *1.0f/2.0f;
-    GLfloat head_size = cat_size *2.0f/12.0f;
-    GLfloat mustache_base_size = cat_size * 1.0f/12.0f; 
-    GLfloat mustache_size = mustache_base_size*2;
+        GLfloat cat_size = __self->cat_size;
+        GLfloat tail_circle_size = cat_size * 1.0f/12.0f;
+        GLfloat second_circle_tail_size = cat_size * 1.0f/12.0f;
+        GLfloat third_circle_tail_size = cat_size * 1.0f/12.0f;
+        GLfloat body_size = cat_size *1.0f/2.0f;
+        GLfloat head_size = cat_size *2.0f/12.0f;
+        GLfloat mustache_base_size = cat_size * 1.0f/12.0f; 
+        GLfloat mustache_size = mustache_base_size*2;
     ///////////////////////////////////////
 
+    ///////////////////////////////////////////
+    //Kitty Collors
+        GLfloat gray[3] ={0.5490196f,0.61568f,0.517647f}; 
+        GLfloat roxo[3] = {243, 2, 247};
+        GLfloat black[3] = {0.0f, 0.0f, 0.f};
+        GLfloat green[3] = {0.0f, 1.0f, 0.f};
+        GLfloat blue[3] = {0.0f,0.0f,1.0f};
+        GLfloat orange[3] = {1.0f,0.60392f,0.011764f};
+   
+    
+    if(should_transform && destiny_point != NULL){
+        printf("\n!@#caiu aqui na transformacao coordenadas do gato x:%f y:%f ponto da bola x:%f y:%f",__self->cat_center_coordinates[0],__self->cat_center_coordinates[1],destiny_point[0],destiny_point[1]);
+         __self->cat_transformer.translate(__self->cat_center_coordinates,destiny_point,&__self->cat_transformer);
+        // GLfloat new_cat_positioning[2];
+        // new_cat_positioning[0] = new_coordinates_matrix[0][0];
+        // new_cat_positioning[0] = new_coordinates_matrix[1][0];
 
-    GLfloat gray[3] ={0.5490196f,0.61568f,0.517647f}; 
-    GLfloat roxo[3] = {243, 2, 247};
-    GLfloat black[3] = {0.0f, 0.0f, 0.f};
-    GLfloat green[3] = {0.0f, 1.0f, 0.f};
-    GLfloat blue[3] = {0.0f,0.0f,1.0f};
-    GLfloat orange[3] = {1.0f,0.60392f,0.011764f};
-
+    }
+    
+    
+    /////////////////////////////////////////////////
     //Referencial points
     GLfloat extremity_right_point[2] = {__self->cat_center_coordinates[0] + cat_size/2,__self->cat_center_coordinates[1]};
     GLfloat extremity_left_point[2] = {__self->cat_center_coordinates[0] - cat_size/2,__self->cat_center_coordinates[1]};
-    
     
     ///////define points from cat center point -> since the center is 
     GLfloat first_circle_tail_center_coordinates[2] = {extremity_left_point[0] + tail_circle_size/2,__self->cat_center_coordinates[1]};

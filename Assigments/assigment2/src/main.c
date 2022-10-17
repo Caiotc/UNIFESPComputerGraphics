@@ -1,4 +1,7 @@
 #include <GL/glut.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "./Lists/LinkedList.h"
 #include "./Lists/Queue.h"
@@ -7,6 +10,7 @@
 #include "./utils/Collisor/Collisor.h"
 #include "./utils/MyPrimitives/Ball.h"
 #include "./utils/BasicShapeDrawer/BasicShapeDrawer.h"
+#include "./utils/Transform/Transform.h"
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -17,12 +21,14 @@
 struct Cat cat;
 struct Queue ball_queue;
 struct BasicShapeDrawer drawer;
+struct Transform transformer;
+GLfloat  * cat_coordinates;
+bool cat_should_transform;
 
  GLfloat a[2] = {0.3f,0.4f};
  GLfloat b[2] = {0.4f,0.7f};
 
 void iterate_over_ball_queue_and_draw_it(struct Queue * ball_queue){
-    printf("\n!@# chgou no iterador");
     int list_size = ball_queue->list.length;
     
     struct Ball *cursor ; 
@@ -31,8 +37,8 @@ void iterate_over_ball_queue_and_draw_it(struct Queue * ball_queue){
     if(list_size > 0){
         for(i =0;i<list_size;i++){
             cursor =(struct Ball *) ball_queue->list.retrieve(i,&ball_queue->list) ;        
-            printf("\n!@# teste da merda da bola x:%f y:%f",cursor->center_coordinates[0],cursor->center_coordinates[1]);
             cursor->draw_it_self(cursor,&drawer);
+
         }
     }
 }
@@ -84,7 +90,10 @@ void display()
 
 
     iterate_over_ball_queue_and_draw_it(&ball_queue);
-    cat.draw_itself(&cat,&drawer);    
+    /*
+        calculate cat transformations 
+    */
+    cat.draw_itself(&cat,&drawer,cat_should_transform,cat_coordinates);    
 
     glutSwapBuffers();
 }
@@ -92,8 +101,6 @@ void display()
 
 void mouse(int button, int state, int x, int y)
 {
-    double w = glutGet(GLUT_WINDOW_WIDTH);
-    double h = glutGet(GLUT_WINDOW_HEIGHT);
     struct Ball new_ball;
     GLfloat  ball_coordinates[2]; 
     switch (button)
@@ -101,12 +108,21 @@ void mouse(int button, int state, int x, int y)
     case GLUT_LEFT_BUTTON:
         if (state == GLUT_DOWN)
         {   
-            printf("\n!@# printando as corrdenadas da tels w%f h%f  e x:%f y:%f  ",(GLfloat)w,(GLfloat)h,(GLfloat)x,(GLfloat)y);
             ball_coordinates[0] =(GLfloat)x;
             ball_coordinates[1] =(GLfloat)y  ;
             new_ball = ball_constructor(ball_coordinates);
             printf("\n!@# a porra da boola");
             ball_queue.push(&ball_queue,&new_ball,sizeof(new_ball));
+            if(cat_coordinates == NULL){
+                printf("\n!@# criar o ponto final do gato");
+                cat_coordinates = malloc(2*sizeof(GLfloat));                
+            }
+                cat_coordinates[0] = ball_coordinates[0];
+                cat_coordinates[1] = ball_coordinates[1];
+                cat_should_transform = true;
+                printf("\n!@# ponto final da porra do gato x:%f y:%f",cat_coordinates[0],cat_coordinates[1]);
+
+            
         }
         break;
     default:
@@ -122,6 +138,10 @@ int main(int argc, char *argv[])
     cat = cat_constructor(cat_center_position,100.4f);
     ball_queue = queue_constructor();
     drawer = basic_shape_drawer_constructor();
+    transformer = transform_constructor();
+    cat_should_transform = false;
+    cat_coordinates= NULL;
+
 
     glutInit(&argc, argv);
     glutInitWindowPosition(100, 100);
