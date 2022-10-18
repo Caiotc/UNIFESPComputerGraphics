@@ -1,17 +1,23 @@
 #include "./Cat.h"
+#define PI 3.141592654
 
-void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer, bool should_transform,GLfloat * destiny_point);
-void pursuit_ball(GLfloat ball_x,GLfloat ball_y);
+
+void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer, bool *should_transform,GLfloat * destiny_point);
+void pursuit_ball(struct Cat * __self);
+void prepare_points_list(struct Cat * __self);
 void cat_do_flip();
 void cat_resize();
 
 void draw_collisor(struct Cat *__self,struct BasicShapeDrawer *drawer, GLfloat *color);
-struct Cat cat_constructor(GLfloat * cat_center_coordinates,GLfloat cat_size){
+struct Cat cat_constructor(GLfloat * cat_center_coordinates,GLfloat cat_size,struct Queue * ball_queue,  struct Queue * points_untill_next_Ball){
     struct Cat new_cat;    
     new_cat.cat_center_coordinates = cat_center_coordinates;
     new_cat.cat_size = cat_size;
     new_cat.cat_transformer = transform_constructor();
     new_cat.draw_itself = draw_itself;
+    new_cat.ball_queue = ball_queue;
+    new_cat.points_untill_next_Ball = points_untill_next_Ball;
+    new_cat.pursuit_ball = pursuit_ball;
 
     return new_cat;
 }
@@ -23,9 +29,10 @@ void cat_destructor( struct Cat *cat)
 };
 
 
-void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer, bool should_transform,GLfloat * destiny_point)
+void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer, bool *should_transform,GLfloat * destiny_point)
 {
-    printf("\n!@# the cat will be draw");
+
+
     ///////////////////////
     // calculate cat proporstions
         GLfloat cat_size = __self->cat_size;
@@ -47,15 +54,6 @@ void draw_itself(struct Cat * __self,struct BasicShapeDrawer* drawer, bool shoul
         GLfloat blue[3] = {0.0f,0.0f,1.0f};
         GLfloat orange[3] = {1.0f,0.60392f,0.011764f};
    
-    
-    if(should_transform && destiny_point != NULL){
-        printf("\n!@#caiu aqui na transformacao coordenadas do gato x:%f y:%f ponto da bola x:%f y:%f",__self->cat_center_coordinates[0],__self->cat_center_coordinates[1],destiny_point[0],destiny_point[1]);
-         __self->cat_transformer.translate(__self->cat_center_coordinates,destiny_point,&__self->cat_transformer);
-        // GLfloat new_cat_positioning[2];
-        // new_cat_positioning[0] = new_coordinates_matrix[0][0];
-        // new_cat_positioning[0] = new_coordinates_matrix[1][0];
-
-    }
     
     
     /////////////////////////////////////////////////
@@ -100,4 +98,73 @@ void draw_collisor(struct Cat *__self,struct BasicShapeDrawer *drawer, GLfloat *
     drawer->draw_quadrilateral_line(first_diagonal_collisor_point,second_diagonal_collisor_point,color);
 }
 
+void pursuit_ball(struct Cat * __self){
+    GLfloat * actual_coordinate;
+    GLfloat ** new_coordinate;
+    
+    if(__self->ball_queue->list.length == 0)
+        return;
+
+    if(__self->ball_queue->list.length > 0 && __self->points_untill_next_Ball->list.length == 0) {
+        //sets pointslist
+        printf("\n!@# a lista vai ser preparada");
+        prepare_points_list(__self);          
+    }
+   
+   if(__self->ball_queue->list.length > 0 && __self->points_untill_next_Ball->list.length != 0){ 
+        actual_coordinate = (GLfloat *)__self->points_untill_next_Ball->peek(__self->points_untill_next_Ball);
+        new_coordinate = (GLfloat **)malloc(3 * sizeof(GLfloat *));
+        for (int i = 0; i < 3; i++) 
+            new_coordinate[i] = (GLfloat *)malloc( sizeof(GLfloat));
+
+        __self->cat_transformer.translate(new_coordinate,__self->cat_center_coordinates,actual_coordinate,&__self->cat_transformer);
+        // use it
+        __self->cat_center_coordinates[0] = new_coordinate[0][0];
+        __self->cat_center_coordinates[1] = new_coordinate[1][0];
+
+        __self->cat_transformer.vector_operations_helper.free_matrix(new_coordinate,3);        
+        __self->points_untill_next_Ball->pop(__self->points_untill_next_Ball);
+        
+        
+        if(__self->points_untill_next_Ball->list.length == 0){
+            __self->ball_queue->pop(__self->ball_queue);
+        }
+
+   }
+}
+
+void prepare_points_list(struct Cat * __self){
+
+    GLfloat x_dist;
+    GLfloat y_dist;
+    struct Ball * actual_ball;
+
+        // this code prepares the points between the ball and the cat
+        actual_ball = (struct Ball *)__self->ball_queue->peek(__self->ball_queue);
+        x_dist =  __self->cat_transformer.vector_operations_helper.distance_x_point(__self->cat_center_coordinates,actual_ball->center_coordinates);
+        y_dist = __self->cat_transformer.vector_operations_helper.distance_y_point(__self->cat_center_coordinates,actual_ball->center_coordinates);
+        
+        if(__self->cat_center_coordinates[0] > actual_ball->center_coordinates[0]){
+            x_dist *= -1;
+        }
+        if(__self->cat_center_coordinates[1]>actual_ball->center_coordinates[1])
+            y_dist *= -1;
+
+        for(int i =0;i<60;i++){
+            GLfloat coordinate_to_insert[2];
+            if(__self->points_untill_next_Ball->list.length == 0){
+                coordinate_to_insert[0] = __self->cat_center_coordinates[0] + x_dist/60;
+                coordinate_to_insert[1] = __self->cat_center_coordinates[1] + y_dist/60;
+                __self->points_untill_next_Ball->push(__self->points_untill_next_Ball,coordinate_to_insert,sizeof(coordinate_to_insert));
+            }
+               GLfloat * lastPoint =  (GLfloat *)__self->points_untill_next_Ball->list.retrieve(__self->points_untill_next_Ball->list.length -1,&__self->points_untill_next_Ball->list);
+            
+
+                coordinate_to_insert[0] = lastPoint[0] + x_dist/60;
+                coordinate_to_insert[1] = lastPoint[1] + y_dist/60;
+
+                __self->points_untill_next_Ball->push(__self->points_untill_next_Ball,coordinate_to_insert,sizeof(coordinate_to_insert));
+        }                             
+
+}
 

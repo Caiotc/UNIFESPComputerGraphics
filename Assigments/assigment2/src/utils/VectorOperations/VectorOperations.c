@@ -1,16 +1,29 @@
 #include "./VectorOperations.h"
+#include <math.h>
 
 GLfloat distance_between_points(GLfloat *a, GLfloat *b); 
 GLfloat distance_x_point(GLfloat *a, GLfloat *b);
 GLfloat distance_y_point(GLfloat *a,GLfloat *b);
-GLfloat * matrix_multiplier(GLfloat **a,int m,int n,GLfloat **b,int p,int q);
+void matrix_multiplier(GLfloat**ab,GLfloat **a,int m,int n,GLfloat **b,int p,int q);
 void print_matrix(GLfloat **a,int m, int n);
+void free_matrix(GLfloat **matrix, int Rows);
+GLfloat internal_product_given_two_vectors(GLfloat *vector_a,GLfloat *vector_b);
+GLfloat angle_between_two_vectors(GLfloat *vector_a,GLfloat *vector_b); 
+GLfloat calculate_vector_norm(GLfloat *vector_a);
 struct VectorOperations vector_operation_constructor(){
     struct VectorOperations new_vector_operations_object;
+
+
+    
+    new_vector_operations_object.print_matrix = print_matrix;
     new_vector_operations_object.distance_between_points = distance_between_points;
     new_vector_operations_object.distance_x_point = distance_x_point;
     new_vector_operations_object.distance_y_point = distance_y_point;
     new_vector_operations_object.matrix_multiplier = matrix_multiplier;
+    new_vector_operations_object.free_matrix = free_matrix;
+    new_vector_operations_object.internal_product_given_two_vectors = internal_product_given_two_vectors;
+    new_vector_operations_object.angle_between_two_vectors = angle_between_two_vectors;
+
 
     return new_vector_operations_object; 
 }
@@ -44,34 +57,62 @@ GLfloat distance_y_point(GLfloat *a, GLfloat *b){
  * @param q num of columns of second matrix
  * @return GLfloat* 
  */
-GLfloat * matrix_multiplier(GLfloat **a,int m,int n,GLfloat **b,int p,int q){
-    GLfloat  new_vector[m][q];
-    GLfloat *return_ptr = &new_vector[0][0];
-    //init matrix with 0.0f
-    for(int i =0;i <m;i++){
-        for(int j = 0;j<q;j++){
-            new_vector[i][j] = 0.0f;
-        }
-    }
-        
+void matrix_multiplier(GLfloat**ab, GLfloat **a,int m,int n,GLfloat **b,int p,int q){    
     
-    print_matrix(&return_ptr,m,q); 
-    
-
     for(int i = 0;i<m;i++){
         for(int j = 0; j<q;j++){
-            for(int k = 0; k<q;k++)                         
-                new_vector[i][j] += a[i][k] * b[i][j]; 
+            for(int k = 0; k<p;k++){                                         
+                ab[i][j] += a[i][k] * b[k][j];
+            } 
         }
     };
-    return return_ptr;
+
 }
+
+
+GLfloat internal_product_given_two_vectors(GLfloat *vector_a,GLfloat* vector_b){
+    return vector_a[0]*vector_b[0] + vector_a[1]*vector_b[1];
+}
+
+GLfloat angle_between_two_vectors(GLfloat * vector_a,GLfloat *vector_b){
+    GLfloat cosin_of_the_angle =  internal_product_given_two_vectors(vector_a,vector_b);
+    cosin_of_the_angle /= calculate_vector_norm(vector_a) * calculate_vector_norm(vector_b);
+
+    return (GLfloat)acos(cosin_of_the_angle); 
+}
+
+GLfloat calculate_vector_norm(GLfloat *vector_a){
+
+    return sqrt(pow(vector_a[0],2) + pow(vector_a[1],2));
+}
+
+
+
+
+
+
+
+
 void print_matrix(GLfloat **a,int m, int n){
     for(int i =0;i<m;i++){
         for(int j =0;j<n;j++){
-              printf(" %f ",a[i][j] );  
+              printf("%f ",a[i][j] );  
         }
-        printf("\n ");
+        printf("\n");
     }
 }
+
+
+void free_matrix(GLfloat **matrix, int Rows) 
+{
+    int row;
+
+    // first free each row
+    for (row = 0; row < Rows; row++) {
+         free(matrix[row]);
+    }
+
+    // Eventually free the memory of the pointers to the rows
+    free(matrix);
+ }
 

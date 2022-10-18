@@ -20,6 +20,7 @@
 
 struct Cat cat;
 struct Queue ball_queue;
+struct Queue points_cat_go_trough;
 struct BasicShapeDrawer drawer;
 struct Transform transformer;
 GLfloat  * cat_coordinates;
@@ -93,7 +94,7 @@ void display()
     /*
         calculate cat transformations 
     */
-    cat.draw_itself(&cat,&drawer,cat_should_transform,cat_coordinates);    
+    cat.draw_itself(&cat,&drawer,&cat_should_transform,cat_coordinates);
 
     glutSwapBuffers();
 }
@@ -111,7 +112,7 @@ void mouse(int button, int state, int x, int y)
             ball_coordinates[0] =(GLfloat)x;
             ball_coordinates[1] =(GLfloat)y  ;
             new_ball = ball_constructor(ball_coordinates);
-            printf("\n!@# a porra da boola");
+            printf("\n!@#coordenadas da bola x:%f y:%f",ball_coordinates[0],ball_coordinates[1]);
             ball_queue.push(&ball_queue,&new_ball,sizeof(new_ball));
             if(cat_coordinates == NULL){
                 printf("\n!@# criar o ponto final do gato");
@@ -120,7 +121,6 @@ void mouse(int button, int state, int x, int y)
                 cat_coordinates[0] = ball_coordinates[0];
                 cat_coordinates[1] = ball_coordinates[1];
                 cat_should_transform = true;
-                printf("\n!@# ponto final da porra do gato x:%f y:%f",cat_coordinates[0],cat_coordinates[1]);
 
             
         }
@@ -130,27 +130,41 @@ void mouse(int button, int state, int x, int y)
     }
     glutPostRedisplay();
 }
+void call_pursuit_ball(){
+    cat.pursuit_ball(&cat);
+    glutPostRedisplay();
+    
+}
+
+void Timer(int extra){
+    glutPostRedisplay();    
+}
 
 int main(int argc, char *argv[])
 {
     
     GLfloat cat_center_position[2] = {320.0f,240.0f};
-    cat = cat_constructor(cat_center_position,100.4f);
     ball_queue = queue_constructor();
     drawer = basic_shape_drawer_constructor();
     transformer = transform_constructor();
     cat_should_transform = false;
     cat_coordinates= NULL;
+    points_cat_go_trough = queue_constructor();
+    cat = cat_constructor(cat_center_position,100.4f,&ball_queue,&points_cat_go_trough);
 
 
     glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
     glutCreateWindow("ballkity game");
 
-    glutDisplayFunc(display);
-    //glutReshapeFunc(reshape);
+    glutDisplayFunc(display); 
     glutMouseFunc(mouse);
+    glutTimerFunc(30,Timer,0);
+    glutIdleFunc(call_pursuit_ball);  
+     
+
     glutMainLoop();
 
     /* code */

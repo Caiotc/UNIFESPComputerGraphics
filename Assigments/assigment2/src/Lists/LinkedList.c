@@ -42,7 +42,6 @@ struct Node *iterate(int index, struct LinkedList *linked_list)
     {
         cursor = cursor->next;
     }
-
     return cursor;
 }
 
@@ -90,6 +89,5 @@ void *retrieve_data(int index, struct LinkedList *linked_list)
 {
 
     struct Node *cursor = iterate(index, linked_list);
-
     return cursor->data;
 }

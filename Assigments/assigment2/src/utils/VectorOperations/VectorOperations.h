@@ -12,8 +12,12 @@ struct VectorOperations{
     GLfloat (*distance_x_point)(GLfloat *a,GLfloat *b);
     GLfloat (*distance_y_point)(GLfloat *a,GLfloat *b);
 
-    GLfloat * (*matrix_multiplier)(GLfloat **a,int m,int n,GLfloat **b,int p,int q);
+    void (*matrix_multiplier)(GLfloat**ab,GLfloat **a,int m,int n,GLfloat **b,int p,int q);
     void (*print_matrix)(GLfloat **a,int m,int n);
+    void (*free_matrix)(GLfloat **matrix, int Rows);
+
+    GLfloat (*internal_product_given_two_vectors)(GLfloat *vector_a,GLfloat *vector_b);
+    GLfloat (*angle_between_two_vectors)(GLfloat *vector_a,GLfloat *vector_b); 
 };
 
 struct VectorOperations vector_operation_constructor();
