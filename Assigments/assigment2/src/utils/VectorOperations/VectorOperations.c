@@ -9,7 +9,9 @@ void print_matrix(GLfloat **a,int m, int n);
 void free_matrix(GLfloat **matrix, int Rows);
 GLfloat internal_product_given_two_vectors(GLfloat *vector_a,GLfloat *vector_b);
 GLfloat angle_between_two_vectors(GLfloat *vector_a,GLfloat *vector_b); 
+GLfloat angle_between_two_vectors_given_a_referential(GLfloat *vector_referential,GLfloat * vector_a,GLfloat *vector_b);
 GLfloat calculate_vector_norm(GLfloat *vector_a);
+
 struct VectorOperations vector_operation_constructor(){
     struct VectorOperations new_vector_operations_object;
 
@@ -23,6 +25,7 @@ struct VectorOperations vector_operation_constructor(){
     new_vector_operations_object.free_matrix = free_matrix;
     new_vector_operations_object.internal_product_given_two_vectors = internal_product_given_two_vectors;
     new_vector_operations_object.angle_between_two_vectors = angle_between_two_vectors;
+    new_vector_operations_object.angle_between_two_vectors_given_a_referential =angle_between_two_vectors_given_a_referential;
 
 
     return new_vector_operations_object; 
@@ -79,6 +82,19 @@ GLfloat angle_between_two_vectors(GLfloat * vector_a,GLfloat *vector_b){
     cosin_of_the_angle /= calculate_vector_norm(vector_a) * calculate_vector_norm(vector_b);
 
     return (GLfloat)acos(cosin_of_the_angle); 
+}
+GLfloat angle_between_two_vectors_given_a_referential(GLfloat *vector_referential,GLfloat * vector_a,GLfloat *vector_b){
+    GLfloat new_a[2];
+    GLfloat new_b[2];
+
+    new_a[0] =vector_a[0]- vector_referential[0] ;
+    new_a[1] =vector_a[1]- vector_referential[1];
+    new_b[0] =vector_b[0]- vector_referential[0];
+    new_b[1] =vector_b[1]- vector_referential[1];   
+    GLfloat cosin_of_the_angle =  internal_product_given_two_vectors(new_a,new_b);
+    cosin_of_the_angle /= calculate_vector_norm(new_a) * calculate_vector_norm(new_b);
+
+    return (GLfloat)acosf(cosin_of_the_angle); 
 }
 
 GLfloat calculate_vector_norm(GLfloat *vector_a){

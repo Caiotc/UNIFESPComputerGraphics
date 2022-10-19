@@ -18,6 +18,8 @@ struct VectorOperations{
 
     GLfloat (*internal_product_given_two_vectors)(GLfloat *vector_a,GLfloat *vector_b);
     GLfloat (*angle_between_two_vectors)(GLfloat *vector_a,GLfloat *vector_b); 
+    GLfloat (*angle_between_two_vectors_given_a_referential)(GLfloat *vector_referential,GLfloat * vector_a,GLfloat *vector_b);
+
 };
 
 struct VectorOperations vector_operation_constructor();

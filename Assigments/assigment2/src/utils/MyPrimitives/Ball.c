@@ -15,7 +15,7 @@ struct Ball ball_constructor(GLfloat * center_coordinates){
 }
 
 void draw_it_self(struct Ball * __self,struct BasicShapeDrawer *drawer){
-    GLfloat size = 50.0f;
+    GLfloat size = 35.0f;
     GLfloat blue[3] = {0.0f,0.0f,1.0f};
     //GLfloat teste_coordinates[2] = {0.7f,0.7f};
 

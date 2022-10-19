@@ -21,6 +21,10 @@
 struct Cat cat;
 struct Queue ball_queue;
 struct Queue points_cat_go_trough;
+struct Queue points_head_go_trough;
+struct Queue points_tail_1_go_trough;
+struct Queue points_tail_2_go_trough;
+struct Queue points_tail_3_go_trough;
 struct BasicShapeDrawer drawer;
 struct Transform transformer;
 GLfloat  * cat_coordinates;
@@ -106,7 +110,7 @@ void mouse(int button, int state, int x, int y)
     GLfloat  ball_coordinates[2]; 
     switch (button)
     {
-    case GLUT_LEFT_BUTTON:
+    case GLUT_RIGHT_BUTTON:
         if (state == GLUT_DOWN)
         {   
             ball_coordinates[0] =(GLfloat)x;
@@ -150,7 +154,16 @@ int main(int argc, char *argv[])
     cat_should_transform = false;
     cat_coordinates= NULL;
     points_cat_go_trough = queue_constructor();
-    cat = cat_constructor(cat_center_position,100.4f,&ball_queue,&points_cat_go_trough);
+    points_head_go_trough = queue_constructor();
+    points_tail_1_go_trough = queue_constructor();
+    points_tail_2_go_trough = queue_constructor();
+    points_tail_3_go_trough = queue_constructor();
+    cat = cat_constructor(
+        cat_center_position,
+        150.4f,
+        &ball_queue,
+        &points_cat_go_trough,
+        &points_head_go_trough);
 
 
     glutInit(&argc, argv);

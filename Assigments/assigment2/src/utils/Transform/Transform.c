@@ -74,7 +74,7 @@ void translate(GLfloat ** coordinate_matrix,GLfloat *point_a,GLfloat*point_b,str
 
 void rotate(GLfloat ** coordinate_matrix,GLfloat * center_coordinates,GLfloat * point_to_rotate,GLfloat angle,struct Transform * __self){
     GLfloat ** rotate_matrix =(GLfloat **)malloc(3 * sizeof(GLfloat *));
-    GLfloat ** point_homogenization =(GLfloat**) malloc(3*sizeof(GLfloat*));
+    GLfloat ** point_homogenization =(GLfloat**) malloc(3*sizeof(GLfloat*));    
     
     for (int i = 0; i < 3; i++) {
         rotate_matrix[i]= (GLfloat *)malloc( 3*sizeof(GLfloat));
@@ -84,16 +84,18 @@ void rotate(GLfloat ** coordinate_matrix,GLfloat * center_coordinates,GLfloat * 
     for(int i = 0; i < 3; i++)
         for(int j =0;j<1;j++) 
             coordinate_matrix[i][j] = 0;
-
-    rotate_matrix[0][0]=cos(angle);//*(1 - center_coordinates[0]/point_to_rotate[0]) + center_coordinates[0]/2*point_to_rotate[0] ;
-    rotate_matrix[0][1]=-sin(angle);//*( 1 - center_coordinates[1]/point_to_rotate[1]) + center_coordinates[0]/2*point_to_rotate[1];
+    
+    rotate_matrix[0][0]=cosf(angle);//*(1 - center_coordinates[0]/point_to_rotate[0]) + center_coordinates[0]/(2*point_to_rotate[0]) ;
+    rotate_matrix[0][1]=-sinf(angle);//*( 1 - center_coordinates[1]/point_to_rotate[1]) + center_coordinates[0]/(2*point_to_rotate[1]);
     rotate_matrix[0][2]=0;
-    rotate_matrix[1][0]=sin(angle);//*(1 - center_coordinates[0]/point_to_rotate[0]) + center_coordinates[1]/2*point_to_rotate[0];
-    rotate_matrix[1][1]=cos(angle);//*(1 - center_coordinates[1]/point_to_rotate[1]) + center_coordinates[1]/2*point_to_rotate[1];
+    rotate_matrix[1][0]=sinf(angle);//*(1 - center_coordinates[0]/point_to_rotate[0]) + center_coordinates[1]/(2*point_to_rotate[0]);
+    rotate_matrix[1][1]=cos(angle);//*(1 - center_coordinates[1]/point_to_rotate[1]) + center_coordinates[1]/(2*point_to_rotate[1]);
     rotate_matrix[1][2]=0;
     rotate_matrix[2][0]=0;
     rotate_matrix[2][1]=0;
     rotate_matrix[2][2]=1;
+
+
 
     point_homogenization[0][0] = center_coordinates[0] ;
     point_homogenization[1][0] = center_coordinates[1];

@@ -35,14 +35,14 @@ void basic_shape_drawer_destroyer(struct BasicShapeDrawer *basic_shape_drawer)
 
 
 void draw_point(GLfloat *a,GLfloat  *color){
-    glPointSize(5.0f);
+    //glPointSize(5.0f);
     glColor3fv(color);
     glBegin(GL_POINTS);
         glVertex2fv(a);
     glEnd();
 }
 void draw_line(GLfloat *a,GLfloat *b,GLfloat  *color){
-    glLineWidth(3.0);
+    glLineWidth(5.0f);
     glColor3fv(color);
     glBegin(GL_LINES);
         glVertex2fv(a);
