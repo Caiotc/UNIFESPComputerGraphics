@@ -217,7 +217,6 @@ void pursuit_ball(struct Cat * __self){
     
     if(__self->ball_queue->list.length > 0 && __self->points_untill_next_Ball->list.length == 0) {
         //sets pointslist
-        printf("\n!@# a fila de pontos entre o gato e a bola vai ser  \n");
         prepare_points_list(__self);
          //__self->cat_is_aligned = false;
           
@@ -306,9 +305,6 @@ struct Cat * __self
     GLfloat new_coord_pair[2];
     GLfloat angle_between_two_vectors;
     
-    printf("\n!@#coordenadas da cabeca do gato x%f y%f \n",
-    __self->cat_head_coordinates[0],
-    __self->cat_head_coordinates[1]);
 
     new_coordinate = (GLfloat **)malloc(3 * sizeof(GLfloat *));
     for (int i = 0; i < 3; i++) 
@@ -329,12 +325,7 @@ struct Cat * __self
         } 
         free(value);
     __self->cat_transformer.vector_operations_helper.free_matrix(new_coordinate,3);
-
-    printf("\n!@# se liga nessa fita tamanho de coordenadas da cabeca : %d da um bisu na primeira %f\n",
-    __self->points_head_go_trough->list.length,
-    
-    *((GLfloat *)__self->points_head_go_trough->peek(__self->points_head_go_trough)) 
-    );        
+        
 
 
 }

@@ -116,10 +116,8 @@ void mouse(int button, int state, int x, int y)
             ball_coordinates[0] =(GLfloat)x;
             ball_coordinates[1] =(GLfloat)y  ;
             new_ball = ball_constructor(ball_coordinates);
-            printf("\n!@#coordenadas da bola x:%f y:%f",ball_coordinates[0],ball_coordinates[1]);
             ball_queue.push(&ball_queue,&new_ball,sizeof(new_ball));
             if(cat_coordinates == NULL){
-                printf("\n!@# criar o ponto final do gato");
                 cat_coordinates = malloc(2*sizeof(GLfloat));                
             }
                 cat_coordinates[0] = ball_coordinates[0];
