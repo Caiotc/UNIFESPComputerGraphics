@@ -1,30 +1,39 @@
-FLAGS = -lglut -lGL -lGLU -lm
-CommonPath = ./Common/
-ListsPath = ./Lists/
-TreesPath = ./Trees/
+# make       -> compile the shared library "libfoo.so"
+# make clean -> remove the library file and all object files (.o)
+# make all   -> clean and compile
+CC = gcc
+SONAME  = output
+SRC     = ./Common/Node.c \
+          ./Lists/LinkedList.c \
+          ./Lists/Queue.c \
+		  ./Trees/BinarySearchTree.c \
+          ./utils/BasicShapeDrawer/BasicShapeDrawer.c \
+		  ./utils/Collisor/Collisor.c \
+		  ./utils/GameObject/GameObject.c \
+		  ./utils/MyPrimitives/Cat.c \
+		  ./utils/MyPrimitives/Ball.c \
+		  ./utils/Transform/Transform.c \
+		  ./utils/VectorOperations/VectorOperations.c \
+		  	main.c
+# compilation options
+CFLAGS  = -Wall -g -lglut -lGL -lGLU -lm
 
+LDFLAGS = -shared -Wl,-soname,$(SONAME)
 
-allconsole: main.o  LinkedList.o Node.o Queue.o BinarySearchTree.o
-	gcc main.o  LinkedList.o Node.o Queue.o  BinarySearchTree.o -o output.exe
+# how to compile individual object files
+OBJS    = $(SRC:.c=.o)
+.c.o:
+	$(CC) -c $< -o $@
 
- main.o: main.c
-	gcc -c main.c
+.PHONY: all clean
 
-buildOpengl: openglTest.o  LinkedList.o Node.o Queue.o BinarySearchTree.o
-	gcc openglTest.o  $(ListsPath)LinkedList.o $(CommonPath)Node.o  $(ListsPath)Queue.o $(TreesPath)BinarySearchTree.o -o openglTest.exe $(FLAGS)
+# library compilation
+$(SONAME): $(OBJS) $(SRC)
+	$(CC) $(OBJS) -o $(SONAME) $(CFLAGS)
 
-openglTest.o: openglTest.c
-	gcc -c openglTest.c
+# cleaning rule
+clean:
+	rm -f $(OBJS) $(SONAME) *~
 
-LinkedList.o: $(ListsPath)LinkedList.c
-	gcc -c $(ListsPath)LinkedList.c -o $(ListsPath)LinkedList.o 
-
-Node.o: $(CommonPath)Node.c
-	gcc -c $(CommonPath)Node.c -o $(CommonPath)Node.o 
-
-Queue.o: $(ListsPath)Queue.c
-	gcc -c $(ListsPath)Queue.c -o $(ListsPath)Queue.o 
-
- BinarySearchTree.o: $(TreesPath)BinarySearchTree.c
-	gcc -c $(TreesPath)BinarySearchTree.c -o $(TreesPath)BinarySearchTree.o 
-
+# additional rule
+all: clean lib
